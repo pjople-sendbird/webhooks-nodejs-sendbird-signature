@@ -17,9 +17,9 @@ app.use(bodyParser.text({ type: 'json' }));
 const port = 3000;
 
 /**
- * Get your Api-Token from your Sendbird Dashboard (https://dashboard.sendbird.com)
+ * Get your Mater Api-Token from your Sendbird Dashboard (https://dashboard.sendbird.com)
  */
-const SENDBIRD_API_TOKEN = 'REPLACE-WITH-YOUR-API-TOKEN';
+const SENDBIRD_API_TOKEN = 'REPLACE-WITH-YOUR-MASTER-API-TOKEN'; // It must be your Master API-Token to make this work
 
 /**
  * For any sent message or any other event you do using your account,
@@ -46,7 +46,10 @@ function isSendbirdCorrectCall(signature, body, res) {
      *  Check if the value of the 'x-sendbird-signature' request header is the same 
      * as the comparison value you've created.
      */ 
-    signature == hash ? res.status(200).send({ success: true }) : res.status(401).send({ success: false });  
+    const result = (signature == hash) ? true : false;
+    console.log('Content is valid: ' + result);
+    
+    result ? res.status(200).send({ success: true }) : res.status(401).send({ success: false });  
 }
 
 app.listen(port, () => console.log(`app is listening on port ${port}!`));
